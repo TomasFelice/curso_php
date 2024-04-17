@@ -1,3 +1,12 @@
+<?php
+
+if($_POST)
+    echo $_POST['nombre'];
+
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,8 +16,12 @@
 </head>
 <body>
     
+<!-- si deseo que la petición se haga a este mismo archivo, dejo el action vacío o pongo el nombre de este archivo-->
+<!-- Es recomendable SIEMPRE poner el nombre del archivo -->
+<!-- O se puede usar la funcion echo htmlspecialchars($_SERVER['PHP_SELF']);-->
+<!-- si deseo que la petición se haga a otro archivo, lo pongo en el action -->
 <!-- se puede enviar un form por post o get -->
-    <form action="recibe.php" method="post">
+    <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
         <input  type="text"
                 placeholder="Nombre:"
                 name="nombre">
