@@ -123,6 +123,15 @@ header {
     margin-right: 15px;
 }
 
+/* Footer */
+
+footer .copyright {
+    text-align: center;
+    padding: 15px 0;
+    color: rgba(255,255,255,.5);
+    font-size: 16px;
+}
+
 /* Paginacion */
 .paginacion {
     width: 100%;
