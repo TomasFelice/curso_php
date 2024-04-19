@@ -13,14 +13,19 @@
 <body>
     <header>
         <div class="contenedor">
-            <h1 class="titulo">Foto: 1.jpg</h1>
+            <h1 class="titulo">Foto: <?php if (!empty($foto['titulo'])) {
+                echo $foto['titulo'];
+            } else {
+                echo $foto['url'];
+            } ?></h1>
         </div>
     </header>
 
     <div class="contenedor">
         <div class="foto">
-            <img src="fotos\sara-cervera-ORltc33fQXw-unsplash.jpg" alt="">
-            <p class="texto">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Totam, quo?</p>
+            <img    src="<?= CARPETA_FOTOS . $foto['url'] ?>"
+                    alt="<?= $foto['titulo'] ?>">
+            <p class="texto"><?= $foto['texto'] ?></p>
             <a href="index.php" class="regresar"><i class="fa fa-long-arrow-left"></i> Regresar</a>
         </div>
     </div>

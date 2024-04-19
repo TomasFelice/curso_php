@@ -19,31 +19,26 @@
 
     <section class="fotos">
         <div class="contenedor">
-            <div class="thumb">
-                <a href="#">
-                    <img src="fotos/sara-cervera-ORltc33fQXw-unsplash.jpg" alt="">
-                </a>
-            </div>
-            <div class="thumb">
-                <a href="#">
-                    <img src="fotos/sara-cervera-ORltc33fQXw-unsplash.jpg" alt="">
-                </a>
-            </div>
-            <div class="thumb">
-                <a href="#">
-                    <img src="fotos/sara-cervera-ORltc33fQXw-unsplash.jpg" alt="">
-                </a>
-            </div>
-            <div class="thumb">
-                <a href="#">
-                    <img src="fotos/sara-cervera-ORltc33fQXw-unsplash.jpg" alt="">
-                </a>
-            </div>
+            
+            <?php foreach ($fotos as $foto): ?>
+                <div class="thumb">
+                    <a href="foto.php?id=<?= $foto['id']; ?>">
+                        <img    src="<?= CARPETA_FOTOS . $foto['url']; ?>"
+                                alt="<?= $foto['titulo'] ?>">
+                    </a>
+                </div>
+            <?php endforeach; ?>
 
             <div class="paginacion">
-                <a href="#" class="izquierda"><i class="fa fa-long-arrow-left"></i> Pagina anterior</a>
-                <a href="#" class="derecha">Pagina siguiente <i class="fa fa-long-arrow-right"></i></a>
+                <?php if ($paginaActual > 1): ?>
+                    <a href="index.php?p=<?= $paginaActual - 1; ?>" class="izquierda"><i class="fa fa-long-arrow-left"></i> Pagina anterior</a>
+                <?php endif; ?>
+
+                <?php if ($totalPaginas != $paginaActual): ?>
+                    <a href="index.php?p=<?= $paginaActual + 1; ?>" class="derecha">Pagina siguiente <i class="fa fa-long-arrow-right"></i></a>
+                <?php endif; ?>
             </div>
+        </div>
     </section>
 
     <footer>
