@@ -1,0 +1,22 @@
+[
+    {
+        "nombre": "Juan",
+        "edad": 25,
+        "pais": "Colombia"
+    },
+    {
+        "nombre": "Pepe",
+        "edad": 41,
+        "pais": "Argentina"
+    },
+    {
+        "nombre": "Raul",
+        "edad": 55,
+        "pais": "Panama"
+    },
+    {
+        "nombre": "Tomas",
+        "edad": 21,
+        "pais": "Argentina"
+    }
+]

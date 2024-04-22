@@ -18,13 +18,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $texto = $_POST['texto'];
     $thumb = $_FILES['thumb']['tmp_name'];
 
-    $archivoSubido = '../' . BLOG_CONFIG['carpeta_imagenes'] . $thumb;
+    $archivoSubido = '../' . BLOG_CONFIG['carpeta_imagenes'] . $_FILES['thumb']['name'];
 
     move_uploaded_file($thumb, $archivoSubido);
 
     $stmt = $conn->prepare('INSERT INTO posts (id, titulo, extracto, texto, thumb) VALUES (null, :titulo, :extracto, :texto, :thumb)');
 
-    $stmt->execute([':titulo' => $titulo, ':extracto' => $extracto, ':texto' => $texto, ':thumb' => $thumb]);
+    $stmt->execute([':titulo' => $titulo, ':extracto' => $extracto, ':texto' => $texto, ':thumb' => $_FILES['thumb']['name']]);
 
     header('Location: ' . BASE_URL . 'admin');
 }

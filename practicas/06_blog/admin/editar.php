@@ -20,21 +20,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $thumbGuardada = $_POST['thumb-guardada'];
     $thumb = $_FILES['thumb'];
 
-    if (empty($thumb['name'])) {
+    if (empty($thumb['tmp_name'])) {
         $thumb = $thumbGuardada;
     } else {
         $archivoSubido = '../' . BLOG_CONFIG['carpeta_imagenes'] . $_FILES['thumb']['name'];
-        echo $archivoSubido;
         move_uploaded_file($_FILES['thumb']['tmp_name'], $archivoSubido);
         
         $thumb = $_FILES['thumb']['name'];
-        echo $thumb;
     }
 
 
     $stmt = $conn->prepare('UPDATE posts SET titulo = :titulo, extracto = :extracto, texto = :texto, thumb = :thumb WHERE id = :id');
 
-    $stmt->execute([':titulo' => $titulo, ':extracto' => $extracto, ':texto' => $texto, ':thumb' => $thumb, ':id' => $id]);
+    $stmt->execute(
+        [':titulo' => $titulo, 
+        ':extracto' => $extracto, 
+        ':texto' => $texto, 
+        ':thumb' => $thumb, 
+        ':id' => $id]
+    );
 
     header('Location: ' . BASE_URL . 'admin');
 } else {
