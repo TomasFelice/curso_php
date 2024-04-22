@@ -32,7 +32,7 @@
                             src="<?=  BASE_URL . BLOG_CONFIG['carpeta_imagenes'] . $post['thumb']; ?>"
                             alt="<?= $post['titulo']; ?>">
                 </div>
-                <p class="extracto"><?= $post['texto']; ?></p>
+                <p class="extracto"><?= nl2br($post['texto']); ?></p>
             </article>
         </div>
 

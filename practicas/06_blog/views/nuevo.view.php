@@ -1,6 +1,3 @@
-<?php
-require 'admin/config.php';
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -23,19 +20,25 @@ require 'admin/config.php';
 </head>
 <body>
     
-    <?php require('views/header.view.php'); ?>
+    <?php require('../views/header.view.php'); ?>
 
     <div class="contenedor">
         <div class="post">
             <article>
-                <h2 class="titulo">Error</h2>
-                <br>
-                <p class="extracto">Error de conexión</p>
+                <h2 class="titulo">Nuevo Articulo</h2>
+                <form action="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post" enctype="multipart/form-data" class="formulario">
+                    <input type="text" name="titulo" placeholder="Titulo del Articulo">
+                    <input type="text" name="extracto" placeholder="Extracto del Articulo">
+                    <textarea name="texto" placeholder="Texto del Articulo"></textarea>
+                    <input type="file" name="thumb">
+                    <input type="submit" value="Crear Articulo">
+    
+                </form>
             </article>
         </div>
     </div>
 
-    <?php require('views/footer.view.php'); ?>
+    <?php require('../views/footer.view.php'); ?>
 
 </body>
 </html>

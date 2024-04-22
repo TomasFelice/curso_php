@@ -1,6 +1,3 @@
-<?php
-require 'admin/config.php';
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -23,19 +20,25 @@ require 'admin/config.php';
 </head>
 <body>
     
-    <?php require('views/header.view.php'); ?>
+    <?php require('header.view.php'); ?>
 
     <div class="contenedor">
         <div class="post">
             <article>
-                <h2 class="titulo">Error</h2>
-                <br>
-                <p class="extracto">Error de conexión</p>
+                <h2 class="titulo">Iniciar Sesion</h2>
+                <form class="formulario" action="<?= htmlspecialchars($_SERVER['PHP_SELF']) ?>" method="post">
+            
+                    <input type="text" name="usuario" placeholder="Usuario">
+                    <input type="password" name="password" placeholder="Contraseña">
+            
+                    <input type="submit" value="Iniciar Sesion">
+
+                </form>
             </article>
         </div>
     </div>
 
-    <?php require('views/footer.view.php'); ?>
+    <?php require('footer.view.php'); ?>
 
 </body>
 </html>

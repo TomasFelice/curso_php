@@ -40,6 +40,13 @@ function get_posts(int $postPorPagina, PDO $conn) : array {
     return $stmt->fetchAll();
 }
 
+function getCantPaginas(int $postPorPagina, PDO $conn) : int {
+    $totalPosts = $conn->query('SELECT FOUND_ROWS() as total');
+    $totalPosts = $totalPosts->fetch()['total'];
+
+    return ceil($totalPosts / $postPorPagina);
+}
+
 function getPostByID(int $idPost, PDO $conn) : array|bool {
     $results = $conn->query('SELECT * FROM posts WHERE id = ' . $idPost . ' LIMIT 1');
     $results = $results->fetch();
@@ -60,4 +67,10 @@ function formatTimeStamp(string $date) : string {
     $year = date('Y', $timestamp);
 
     return "$day de $month del $year";
+}
+
+function comprobarSession () {
+    if (!isset($_SESSION['admin'])) {
+        header('Location: ' . BASE_URL);
+    }
 }

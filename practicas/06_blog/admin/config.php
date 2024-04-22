@@ -10,7 +10,7 @@ define('BD_CONFIG', [
 ]);
 
 define('BLOG_CONFIG', [
-    'post_por_pagina' => '5',
+    'post_por_pagina' => '2',
     'carpeta_imagenes' => 'imagenes_prueba/'
 ]);
 

@@ -21,8 +21,9 @@
 <body>
     
     <?php require('header.view.php'); ?>
-
+    
     <div class="contenedor">
+        <h1><?= $titulo ?></h1>
 
         <?php foreach($posts as $post): ?>
             <div class="post">

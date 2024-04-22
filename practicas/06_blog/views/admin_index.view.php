@@ -1,6 +1,3 @@
-<?php
-require 'admin/config.php';
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -23,19 +20,29 @@ require 'admin/config.php';
 </head>
 <body>
     
-    <?php require('views/header.view.php'); ?>
+    <?php require('../views/header.view.php'); ?>
 
     <div class="contenedor">
-        <div class="post">
-            <article>
-                <h2 class="titulo">Error</h2>
-                <br>
-                <p class="extracto">Error de conexión</p>
-            </article>
-        </div>
+        <h2>Panel de Control</h2>
+        <a href="nuevo.php" class="btn">Nuevo Post</a>
+        <a href="cerrar.php" class="btn">Cerrar Sesion</a>
+
+        <?php foreach($posts as $post): ?>
+            <div class="post">
+                <article>
+                    <h2 class="titulo"><?= $post['id'] . '-' . $post['titulo']?></h2>    
+                    <a href="editar.php?id=<?= $post['id']; ?>">Editar</a>
+                    <a href="../single.php?id=<?= $post['id']; ?>">Ver</a>
+                    <a href="borrar.php?id=<?= $post['id']; ?>">Borrar</a>
+                </article>
+            </div>
+        <?php endforeach; ?>
+
+        <?php require('../views/paginacion.view.php'); ?>
+
     </div>
 
-    <?php require('views/footer.view.php'); ?>
+    <?php require('../views/footer.view.php'); ?>
 
 </body>
 </html>
