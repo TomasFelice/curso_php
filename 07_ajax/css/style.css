@@ -80,7 +80,7 @@ header button.active {
 	display: none;
 }
 
-.error_box.active {
+.error_box .active {
 	display: block;
 }
 

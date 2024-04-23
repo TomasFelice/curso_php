@@ -1,53 +1,104 @@
-let btn = document.getElementById('btn_cargar_usuarios');
-let loader = document.getElementById('loader');
+let btnCargar = document.getElementById('btn_cargar_usuarios'),
+    errorBox = document.getElementById('error_box'),
+    tabla = document.getElementById('tabla'),
+    loader = document.getElementById('loader');
 
-btn.addEventListener('click', function(){
+let usuarioNombre,
+    usuarioEdad,
+    usuarioPais,
+    usuariosCorreo;
+
+function cargarUsuarios(){
+    tabla.innerHTML = '<tr><th>ID</th><th>Nombre</th><th>Edad</th><th>Pais</th><th>Correo</th></tr>';
+
     let peticion = new XMLHttpRequest();
-    // peticion.open('GET', 'https://api.npoint.io/917e6b88ee0d677d193b');
-    peticion.open('GET', 'php/usuarios.php');
+    peticion.open('GET', 'php/leer_datos.php');
 
     loader.classList.add('active');
 
-    peticion.onload = function(){
+    peticion.onload = function() {
         let datos = JSON.parse(peticion.responseText);
 
-        // Ventajas de usar el for en estos casos:
-            // mayor control de la cantidad de registros que recorreomos
-        for (let i = 0; i < datos.length; i++) {
-            let elemento = document.createElement('tr');
-            elemento.innerHTML += ("<td>" + datos[i]._id + "</td>");
-            elemento.innerHTML += ("<td>" + datos[i].nombre + "</td>");
-            elemento.innerHTML += ("<td>" + datos[i].edad + "</td>");
-            elemento.innerHTML += ("<td>" + datos[i].pais + "</td>");
-            elemento.innerHTML += ("<td>" + datos[i].correo + "</td>");
-            document.getElementById('tabla').appendChild(elemento);
+        if (datos.error) {
+            errorBox.classList.add('active');
+        } else {
+            for (let i = 0; i < datos.length; i++) {
+                let elemento = document.createElement('tr');
+                elemento.innerHTML += ('<td>' + datos[i].id + '</td>');
+                elemento.innerHTML += ('<td>' + datos[i].nombre + '</td>');
+                elemento.innerHTML += ('<td>' + datos[i].edad + '</td>');
+                elemento.innerHTML += ('<td>' + datos[i].pais + '</td>');
+                elemento.innerHTML += ('<td>' + datos[i].correo + '</td>');
+
+                tabla.appendChild(elemento);
+            }
         }
+    }
 
-        // datos.forEach(persona => {
-        //     let elemento = document.createElement('tr');
-        //     elemento.innerHTML += ("<td>" + persona.id + "</td>");
-        //     elemento.innerHTML += ("<td>" + persona.nombre + "</td>");
-        //     elemento.innerHTML += ("<td>" + persona.edad + "</td>");
-        //     elemento.innerHTML += ("<td>" + persona.pais + "</td>");
-        //     elemento.innerHTML += ("<td>" + persona.correo + "</td>");
-        //     document.getElementById('tabla').appendChild(elemento);
-        // });
-    };
-
-    peticion.onreadystatechange = function(){
-        // readyState:
-            // 0: No inicializado
-            // 1: Conexión establecida
-            // 2: Recibido
-            // 3: Procesando
-            // 4: Respuesta lista
-        // status:
-            // 200: Correcto
-            // ...
-        if(peticion.readyState == 4 && peticion.status == 200) {
+    peticion.onreadystatechange = function() {
+        if (peticion.readyState == 4 && peticion.status == 200) {
             loader.classList.remove('active');
         }
-    };
+    }
 
     peticion.send();
+}
+
+function formulario_valido() {
+    if (usuarioNombre == '' || isNaN(usuarioEdad) || usuarioPais == '' || usuarioCorreo == '') {
+        return false;
+    }
+    
+    return true;
+}
+
+function agregarUsuarios(e) {
+    e.preventDefault();
+
+    let peticion = new XMLHttpRequest();
+    peticion.open('POST', 'php/insertar_usuario.php');
+
+    usuarioNombre = formulario.nombre.value.trim();
+    usuarioEdad = parseInt(formulario.edad.value.trim());
+    usuarioPais = formulario.pais.value.trim();
+    usuarioCorreo = formulario.correo.value.trim();
+
+    if (formulario_valido()) {
+        errorBox.classList.remove('active');
+        let parametros = 'nombre=' + usuarioNombre + '&edad=' + usuarioEdad + '&pais=' + usuarioPais + '&correo=' + usuarioCorreo;
+
+        peticion.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+        loader.classList.add('active');
+
+        peticion.onload = function() {
+            cargarUsuarios();
+            formulario.nombre.value = '';
+            formulario.edad.value = '';
+            formulario.pais.value = '';
+            formulario.correo.value = '';
+        }
+
+        peticion.onreadystatechange = function() {
+            if (peticion.readyState == 4 && peticion.status == 200) {
+                loader.classList.remove('active');
+            }
+        }
+
+        peticion.send(parametros);
+    } else {
+        errorBox.classList.add('active');
+        errorBox.innerHTML = 'Por favor completa el formulario correctamente';
+    }
+
+}
+
+btnCargar.addEventListener('click', function() {
+    cargarUsuarios();
+
+});
+
+formulario.addEventListener('submit', function(e) {
+    agregarUsuarios(e);
+
 });
